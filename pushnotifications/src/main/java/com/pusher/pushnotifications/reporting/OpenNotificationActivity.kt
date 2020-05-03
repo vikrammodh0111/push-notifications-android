@@ -10,6 +10,7 @@ import com.pusher.pushnotifications.internal.DeviceStateStore
 import com.pusher.pushnotifications.internal.InstanceDeviceStateStore
 import com.pusher.pushnotifications.logging.Logger
 import com.pusher.pushnotifications.reporting.api.OpenEvent
+import android.net.Uri
 
 /*
  * This activity will be opened when a user taps a notification sent by the Pusher push notifications
@@ -30,6 +31,15 @@ class OpenNotificationActivity: Activity() {
         }
 
         i.replaceExtras(bundle)
+
+        val link: String
+
+        link = i.getStringExtra("link")
+
+        if(link != null) {
+          log.i("Got URI for action $link")
+          i.setData(Uri.parse(link))
+        }
 
         // We need to clear the activity stack so that this activity doesn't show up when customers
         // are debugging.
